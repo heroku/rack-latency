@@ -30,7 +30,7 @@ module Rack
                 @size = response.length
               end
               end_time = Time.now
-              @logger.info "at=info source=#{opts[:name] || uri} measure#response.size=#{@size} measure#response.latency=#{"%.2f" % ((end_time - start_time)*1000)}ms"
+              @logger.info "at=info source=#{opts[:name] || uri.host} measure#response.size=#{@size} measure#response.latency=#{"%.2f" % ((end_time - start_time)*1000)}ms"
             rescue
               @logger.info "at=error source=#{uri}"
             end
