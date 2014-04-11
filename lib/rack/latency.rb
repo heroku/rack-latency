@@ -33,7 +33,6 @@ module Rack
       url = URI.parse(url)
       url.path = "/" if url.path == ""
       measurements[url] = opts.merge(method: method)
-      puts "measurements is now #{measurements}"
     end
   end
 end
