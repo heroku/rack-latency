@@ -9,8 +9,8 @@ module Rack
       yield self
     end
 
-    def self.paths
-      @paths ||= {}
+    def self.measurements
+      @measurements ||= {}
     end
 
     def self.wait(val)
@@ -32,9 +32,8 @@ module Rack
     def self.add_measurement(url, method, opts = {})
       url = URI.parse(url)
       url.path = "/" if url.path == ""
-      if path
-        paths[url] = opts.merge(method: method)
-      end
+      measurements[url] = opts.merge(method: method)
+      puts "measurements is now #{measurements}"
     end
   end
 end
