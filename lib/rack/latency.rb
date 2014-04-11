@@ -21,13 +21,20 @@ module Rack
       @wait || 2
     end
 
-    def self.head(path, opts = {})
-      paths[path] = opts.merge(method: :head)
+    def self.head(url, opts = {})
+      add_measurement(url, :head, opts)
     end
 
-    def self.get(path, opts = {})
-      paths[path] = opts.merge(method: :get)
+    def self.get(url, opts = {})
+      add_measurement(url, :get, opts)
+    end
 
+    def self.add_measurement(url, method, opts = {})
+      url = URI.parse(url)
+      url.path = "/" if url.path == ""
+      if path
+        paths[url] = opts.merge(method: method)
+      end
     end
   end
 end

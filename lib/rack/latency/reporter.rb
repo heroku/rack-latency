@@ -22,14 +22,13 @@ module Rack
       def report(interval)
         loop do
           Rack::Latency.paths.each do |uri, opts|
-            uri = URI.parse(uri)
 
             # Shortcut
             begin
               start_time = Time.now
               @size = 0
               Net::HTTP.start(uri.host, uri.port) do |http|
-                response = http.send(opts[:method], (uri.path || "/"))
+                response = http.send(opts[:method], path)
                 @size = response.length
               end
               end_time = Time.now
