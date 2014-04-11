@@ -29,7 +29,7 @@ module Rack
               start_time = Time.now
               @size = 0
               Net::HTTP.start(uri.host, uri.port) do |http|
-                response = http.send(opts[:method], uri.path)
+                response = http.send(opts[:method], (uri.path || "/"))
                 @size = response.length
               end
               end_time = Time.now
