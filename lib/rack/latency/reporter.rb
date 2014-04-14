@@ -15,6 +15,8 @@ module Rack
       end
 
       def call(env)
+        status, headers, body = @app.call(env)
+        [status, headers, body]
       end
 
       private
