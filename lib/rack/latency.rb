@@ -1,6 +1,8 @@
+require "net/ping"
 require "rack/latency/version"
 require "rack/latency/reporter"
 require "rack/latency/rack_latency_railtie"
+
 
 module Rack
   module Latency
@@ -28,6 +30,24 @@ module Rack
     def self.get(url, opts = {})
       add_measurement(url, :get, opts)
     end
+
+    def self.environment(env)
+      @environments = [env]
+    end
+
+    def self.environments(*envs)
+      @environments = envs
+    end
+
+    def self.get_environments
+      if @environments.nil? or @environments == []
+        [:production]
+      else
+        @environments
+      end
+    end
+
+    private
 
     def self.add_measurement(url, method, opts = {})
       url = URI.parse(url)

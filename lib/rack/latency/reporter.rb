@@ -9,9 +9,11 @@ module Rack
         @logger = logger || ::Logger.new($stdout)
 
         interval = (Rack::Latency.get_wait).to_i
-
-        @logger.info "-> rack-latency starting in interval mode (#{interval}s)"
-        Thread.new { report(interval) }
+        if defined?(Rails)
+          start(interval) if Rack::Latency.get_environments.include?(Rails.env.to_sym)
+        else
+          start(interval) if Rack::Latency.get_environments.include(ENV["RACK_ENV"].to_sym)
+        end
       end
 
       def call(env)
@@ -20,6 +22,11 @@ module Rack
       end
 
       private
+
+      def start(interval)
+        @logger.info "-> rack-latency starting in interval mode (#{interval}s)"
+        Thread.new { report(interval) }
+      end
 
       def report(interval)
         loop do

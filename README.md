@@ -28,6 +28,12 @@ Rack::Latency.configure do |measure|
 
   # set the delay time between measurement loops.
   measure.wait ENV["RACK-LATENCY-WAIT"] || 4
+
+  # set the environment(s) in which to run, as defined by Rails.env or RACK_ENV.
+  # By default, it will only run in production.
+  measure.environment :production
+  # or
+  measure.environments :production, :staging
 end
 
 ```
