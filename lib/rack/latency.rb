@@ -1,4 +1,3 @@
-require "net/ping"
 require "rack/latency/version"
 require "rack/latency/reporter"
 require "rack/latency/rack_latency_railtie"
